@@ -6,7 +6,9 @@ export default function EmailOTP({ login }) {
   const [message, setMessage] = useState();
   const [disabled, setDisabled] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     setDisabled(true);
     setRetries((r) => r - 1);
     setPasscode("");
@@ -45,20 +47,22 @@ export default function EmailOTP({ login }) {
     <div id="otp-component">
       <h3>enter one-time passcode</h3>
       {message && <div id="otp-message">{message}</div>}
-      <input
-        type="text"
-        name="passcode"
-        id="passcode"
-        placeholder="Enter code"
-        value={passcode}
-        onChange={(e) => setPasscode(e.target.value)}
-      />
-      <button id="submit-otp" onClick={handleSubmit} disabled={disabled}>
-        Submit
-      </button>
-      <button id="cancel-otp" onClick={handleCancel}>
-        Cancel
-      </button>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="passcode"
+          id="passcode"
+          placeholder="Enter code"
+          value={passcode}
+          onChange={(e) => setPasscode(e.target.value)}
+        />
+        <button id="submit-otp" type="submit" disabled={disabled}>
+          Submit
+        </button>
+        <button id="cancel-otp" onClick={handleCancel} disabled={disabled}>
+          Cancel
+        </button>
+      </form>
     </div>
   );
 }
