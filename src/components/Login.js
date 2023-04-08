@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { magic } from "../lib/magic.js";
 import EmailOTP from "./EmailOTP.js";
+import EmailForm from "./EmailForm.js";
 
-export default function LoginForm({ setUser }) {
-  const [email, setEmail] = useState("");
+export default function Login({ setUser }) {
   const [showUI, setShowUI] = useState(false);
   const [otpLogin, setOtpLogin] = useState();
 
-  const handleEmailLoginCustom = async () => {
+  const handleEmailLoginCustom = async (email) => {
     try {
       setOtpLogin();
       const otpLogin = magic.auth.loginWithEmailOTP({ email, showUI: false });
@@ -36,7 +36,6 @@ export default function LoginForm({ setUser }) {
         .on("settled", () => {
           setOtpLogin();
           setShowUI(false);
-          setEmail("");
         })
         .catch((err) => {
           console.log("%cError caught during login:\n", "color: orange");
@@ -57,25 +56,13 @@ export default function LoginForm({ setUser }) {
   };
 
   return (
-    <div className="loginForm componentContainer">
+    <div className="login componentContainer">
       <h1>Please sign up or login</h1>
-      <div>
-        {showUI ? (
-          <EmailOTP login={otpLogin} />
-        ) : (
-          <>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <button onClick={handleEmailLoginCustom}>Login</button>
-          </>
-        )}
-      </div>
+      {showUI ? (
+        <EmailOTP login={otpLogin} />
+      ) : (
+        <EmailForm handleEmailLoginCustom={handleEmailLoginCustom} />
+      )}
     </div>
   );
 }
