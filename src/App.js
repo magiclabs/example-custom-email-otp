@@ -4,7 +4,7 @@ import { magic } from "./lib/magic.js";
 // components
 import Header from "./components/Header.js";
 import Loading from "./components/Loading.js";
-import LoginForm from "./components/LoginForm.js";
+import LoginForm from "./components/Login.js";
 import Logout from "./components/Logout.js";
 import UserInfo from "./components/UserInfo.js";
 import Footer from "./components/Footer.js";

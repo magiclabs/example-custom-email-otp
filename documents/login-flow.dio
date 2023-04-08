@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="89tZDIfjYZVsItWmEL5v" name="Page-1">
-        <mxGraphModel dx="921" dy="497" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="508" dy="372" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -49,14 +49,14 @@
                 <mxCell id="10" value="email" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=#16021D;shadow=1;container=0;" parent="78" vertex="1">
                     <mxGeometry x="90" y="373.6725316455696" width="50" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;fillColor=#666600;container=0;dashed=1;strokeColor=none;" parent="78" vertex="1">
+                <mxCell id="19" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;fillColor=#18151d;container=0;strokeColor=default;" parent="78" vertex="1">
                     <mxGeometry x="180" y="457.72316455696205" width="220" height="84.05063291139241" as="geometry"/>
                 </mxCell>
                 <mxCell id="21" value="email" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=#16021D;shadow=1;container=0;" parent="78" vertex="1">
-                    <mxGeometry x="200" y="489.2421518987343" width="50" height="30" as="geometry"/>
+                    <mxGeometry x="200" y="500.00215189873427" width="50" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="email-form" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;container=0;" parent="78" vertex="1">
-                    <mxGeometry x="250" y="457.72316455696205" width="80" height="30" as="geometry"/>
+                <mxCell id="20" value="EmailForm" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;container=0;fontSize=15;" parent="78" vertex="1">
+                    <mxGeometry x="240" y="459.24316455696203" width="100" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="50" value="" style="edgeStyle=none;html=1;" parent="78" source="47" target="20" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
