@@ -98,6 +98,15 @@ footer {
 }
 
 /*
+  LOADING 
+*/
+
+.loading > h1 {
+  text-align: center;
+  color: #495867;
+}
+
+/*
   LOGIN 
 */
 
