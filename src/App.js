@@ -36,22 +36,23 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <>
       <Header />
-
-      {user?.loading ? (
-        <Loading />
-      ) : user?.issuer ? (
-        <>
-          <UserInfo userInfo={user} />
-          <Logout setUser={setUser} />
-        </>
-      ) : (
-        <LoginForm setUser={setUser} />
-      )}
+      <main>
+        {user?.loading ? (
+          <Loading />
+        ) : user?.issuer ? (
+          <div className="user-container">
+            <UserInfo userInfo={user} />
+            <Logout setUser={setUser} />
+          </div>
+        ) : (
+          <LoginForm setUser={setUser} />
+        )}
+      </main>
 
       <Footer />
-    </div>
+    </>
   );
 }
 
