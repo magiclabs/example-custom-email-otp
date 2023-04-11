@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,263 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  min-width: 100%;
+
+  background-color: #F7F7FF;
+}
+
+main {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  padding: 1em;
+}
+
+a {
+  color: #BDD5EA;
+}
+
+a:active {
+  color: #FE5F55;
+}
+
+input {
+  flex-grow: 0.5;
+
+  border: none;
+  border-radius: 10px;
+  padding: 0.5em;
+
+  font-size: 1.2em;
+}
+
+::-webkit-input-placeholder { /* Edge */
+  color: #BDD5EA;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #BDD5EA;
+}
+
+::placeholder {
+  color: #BDD5EA;
+}
+
+h1{ 
+  margin: 0;
+  color: #F7F7FF;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+
+  transition: box-shadow 1s;
+}
+
+button:hover {
+  box-shadow: 10px 10px #495867;
+}
+
+footer, header {
+  display: flex;
+
+  padding: 1em;
+
+  background-color: #495867;
+  color:#BDD5EA;
+}
+
+footer {
+  justify-content: space-around;
+
+  font-size: 1.5em;
+}
+
+/*
+  LOGIN 
+*/
+
+.login {
+  flex-grow: 0.4;
+  width: 75%;
+  max-height: 450px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  margin: auto;
+  border: none;
+  padding: 5em 0;
+  box-shadow: 10px 10px #495867;
+
+  text-align: center;
+  background-color: #577399;
+}
+
+.ok-button {
+  flex-grow: 0.5;
+  padding: 0.7em;
+  
+  font-size: 1.2em;
+  color: #495867;
+  background-color: #BDD5EA;
+}
+
+.ok-button:active {
+  background-color: rgb(209 , 233, 254);
+}
+
+/*
+  EMAIL FORM 
+*/
+
+.email-form {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5em;
+
+  margin: 0 auto;
+}
+
+/*
+  EMAIL OTP
+*/
+
+.email-otp {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap:3em;
+}
+
+.otp-form {
+  width: 90%;
+  display: flex;
+  gap: 0.5em;
+
+  margin: 0 auto;
+}
+
+#otp-message {
+  width: 90%;
+
+  margin: auto;
+  border-radius: 10px;
+  padding: 0.5em;
+
+  font-size: 1.2em;
+  color:#FE5F55;
+  background-color: #495867;
+}
+
+/*
+  USER CONTAINER
+*/
+
+.user-container {
+  flex-grow: 0.4;
+  width: 85%;
+  max-width: 700px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap:1em;
+
+  margin: auto;
+  border: none;
+  padding: 2.5em 1em;
+  box-shadow: 10px 10px #495867;
+
+  text-align: center;
+  background-color: #577399;
+}
+
+/*
+  USER INFO 
+*/
+
+.user-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* gap: 2em; */
+}
+
+caption{
+  margin-bottom: 0.5em;
+
+  text-align: left;
+  font-size: 1.5em;
+  color: #BDD5EA;
+}
+
+th, td {
+  padding: 0.7em 0.1em;
+}
+
+th {
+  background-color: #495867;
+  color: #F7F7FF;
+}
+
+td {
+  background-color: #F7F7FF;
+  color: #495867;
+}
+
+.user-info table{
+  width: 100%;
+  margin: auto;
+
+  line-break: anywhere;
+}
+
+.user-info h1 {
+  line-break: anywhere;
+}
+
+.cancel-button {
+  width: 25%;
+
+  margin: 0 auto;
+  padding: 0.7em;
+  
+  font-size: 1.2em;
+  color: #F7F7FF;
+  background-color: #FE5F55;
+}
+
+.cancel-button:active {
+  background-color: rgb(274, 155, 105);
+}
+
+/*
+  LOGOUT
+*/
+
+.logout-button {
+  padding: 0.7em;
+  
+  font-size: 1.2em;
+  color: #495867;
+  background-color: #BDD5EA;
+}
+
+.logout-button:active {
+  background-color: rgb(209 , 233, 254);
 }
