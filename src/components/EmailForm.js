@@ -10,10 +10,10 @@ export default function EmailForm({ handleEmailLoginCustom }) {
   }
 
   return (
-    <>
+    <div className="email-form">
       <h1>Please sign up or login</h1>
 
-      <form className="email-form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"
@@ -26,6 +26,6 @@ export default function EmailForm({ handleEmailLoginCustom }) {
           Login
         </button>
       </form>
-    </>
+    </div>
   );
 }
