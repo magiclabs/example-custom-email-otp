@@ -6,6 +6,8 @@ export default function UserInfo({ userInfo }) {
   return (
     <div className="user-info">
       <h1>Hello {userInfo.email}</h1>
+
+      {/* Desktop view */}
       <table>
         <caption>User Metadata</caption>
 
@@ -26,6 +28,23 @@ export default function UserInfo({ userInfo }) {
           ))}
         </tbody>
       </table>
+
+      {/* Mobile view */}
+      <div className="mobile-user-meta">
+        <h2>User Metadata</h2>
+
+        <div>
+          {userInfoKeys.map((key, index) => (
+            <div key={index}>
+              <div className="key-and-type">
+                <div>{key}</div>
+                <div>{typeof userInfo[key]}</div>
+              </div>
+              <div className="value">{`${userInfo[key]}`}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
