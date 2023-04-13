@@ -44,10 +44,12 @@ export default function EmailOTP({ login }) {
   };
 
   return (
-    <div id="otp-component">
-      <h3>enter one-time passcode</h3>
-      {message && <div id="otp-message">{message}</div>}
-      <form onSubmit={handleSubmit}>
+    <div className="email-otp">
+      <h1>enter one-time passcode</h1>
+      <div className="message-wrapper">
+        {message && <code id="otp-message">{message}</code>}
+      </div>
+      <form className="otp-form" onSubmit={handleSubmit}>
         <input
           type="text"
           name="passcode"
@@ -56,13 +58,17 @@ export default function EmailOTP({ login }) {
           value={passcode}
           onChange={(e) => setPasscode(e.target.value)}
         />
-        <button id="submit-otp" type="submit" disabled={disabled}>
+        <button className="ok-button" type="submit" disabled={disabled}>
           Submit
         </button>
-        <button id="cancel-otp" onClick={handleCancel} disabled={disabled}>
-          Cancel
-        </button>
       </form>
+      <button
+        className="cancel-button"
+        onClick={handleCancel}
+        disabled={disabled}
+      >
+        cancel
+      </button>
     </div>
   );
 }

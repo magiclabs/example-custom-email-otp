@@ -56,8 +56,7 @@ export default function Login({ setUser }) {
   };
 
   return (
-    <div className="login componentContainer">
-      <h1>Please sign up or login</h1>
+    <div className="login">
       {showUI ? (
         <EmailOTP login={otpLogin} />
       ) : (
