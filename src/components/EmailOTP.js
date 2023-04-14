@@ -56,7 +56,7 @@ export default function EmailOTP({ login }) {
           id="passcode"
           placeholder="Enter code"
           value={passcode}
-          onChange={(e) => setPasscode(e.target.value)}
+          onChange={(e) => setPasscode(e.target.value.replace(" ", ""))}
         />
         <button className="ok-button" type="submit" disabled={disabled}>
           Submit
