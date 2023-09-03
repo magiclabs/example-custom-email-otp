@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { magic } from "../lib/magic.js";
-import EmailOTP from "./EmailOTP.js";
+import OTPModal from "./OTPModal.js";
 import EmailForm from "./EmailForm.js";
 
 export default function Login({ setUser }) {
-  const [showUI, setShowUI] = useState(false);
+  const [showOTPModal, setShowOTPModal] = useState(false);
   const [otpLogin, setOtpLogin] = useState();
 
   const handleEmailLoginCustom = async (email) => {
@@ -26,21 +26,21 @@ export default function Login({ setUser }) {
           console.log("on email OTP sent!");
 
           setOtpLogin(otpLogin);
-          setShowUI(true);
+          setShowOTPModal(true);
         })
         .on("done", (result) => {
           handleGetMetadata();
 
           console.log(`DID Token: %c${result}`, "color: orange");
         })
-        .on("settled", () => {
-          setOtpLogin();
-          setShowUI(false);
-        })
         .catch((err) => {
           console.log("%cError caught during login:\n", "color: orange");
 
           console.log(err);
+        })
+        .on("settled", () => {
+          setOtpLogin();
+          setShowOTPModal(false);
         });
     } catch (err) {
       console.error(err);
@@ -57,8 +57,8 @@ export default function Login({ setUser }) {
 
   return (
     <div className="login">
-      {showUI ? (
-        <EmailOTP login={otpLogin} />
+      {showOTPModal ? (
+        <OTPModal login={otpLogin} />
       ) : (
         <EmailForm handleEmailLoginCustom={handleEmailLoginCustom} />
       )}

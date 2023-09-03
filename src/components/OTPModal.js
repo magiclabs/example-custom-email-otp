@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function EmailOTP({ login }) {
+export default function OTPModal({ login }) {
   const [passcode, setPasscode] = useState("");
   const [retries, setRetries] = useState(2);
   const [message, setMessage] = useState();
