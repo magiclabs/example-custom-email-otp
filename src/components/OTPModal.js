@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function OTPModal({ login }) {
+export default function OTPModal({ login, handleCancel }) {
   const [passcode, setPasscode] = useState("");
   const [retries, setRetries] = useState(2);
   const [message, setMessage] = useState();
@@ -36,13 +36,6 @@ export default function OTPModal({ login }) {
     });
   };
 
-  const handleCancel = () => {
-    login.emit("cancel");
-    setDisabled(false);
-
-    console.log("%cUser canceled login.", "color: orange");
-  };
-
   return (
     <div className="email-otp">
       <h1>enter one-time passcode</h1>
@@ -64,7 +57,10 @@ export default function OTPModal({ login }) {
       </form>
       <button
         className="cancel-button"
-        onClick={handleCancel}
+        onClick={() => {
+          handleCancel();
+          setDisabled(false);
+        }}
         disabled={disabled}
       >
         cancel
