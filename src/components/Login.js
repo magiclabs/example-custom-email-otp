@@ -50,7 +50,7 @@ export default function Login({ setUser }) {
           setShowDeviceRegistrationModal(false);
         })
         .on("email-otp-sent", () => {
-          // The email has been sent to the us
+          // The email has been sent to the user
 
           setShowOTPModal(true);
         })
@@ -84,7 +84,6 @@ export default function Login({ setUser }) {
   const handleCancel = () => {
     try {
       otpLogin.emit("cancel");
-      // setDisabled(false);
 
       console.log("%cUser canceled login.", "color: orange");
     } catch (err) {
