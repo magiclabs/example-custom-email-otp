@@ -46,3 +46,4 @@ There are two flows demonstrated in this app for which events must be handled to
 | `device-verification-email-sent`   | Dispatched when the device verification email is sent.                 |
 | `device-approved`                  | Dispatched when the user has approved the unrecongized device.         |
 | `device-verification-link-expired` | Dispatched when the email verification email has expired.              |
+| `device-retry`                     | Emit to restart the device registration flow.                          |
