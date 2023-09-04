@@ -37,7 +37,7 @@ export default function OTPModal({ login, handleCancel }) {
   };
 
   return (
-    <div className="email-otp">
+    <div className="modal email-otp">
       <h1>enter one-time passcode</h1>
       <div className="message-wrapper">
         {message && <code id="otp-message">{message}</code>}
