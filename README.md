@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# Custom UI Email Login with Magic Dedicated Wallet and One-Time Password (OTP)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Magic is a passwordless authentication sdk that supports passwordless email login via one-time passwords (OTP). This app will walk through implementing logins via email with OTP using your own UI.
 
-## Available Scripts
+> 🌐 **Live Demo → https://b2gzt5.csb.app/**
 
-In the project directory, you can run:
+# Quick Start Instructions
 
-### `yarn start`
+```
+$ git clone git@github.com:magiclabs/example-custom-email-otp.git
+$ cd example-custom-email-otp
+$ yarn install
+$ yarn start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> app starts on http://localhost:3000
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Environment Variables
 
-### `yarn test`
+Replace the API keys in `.env` with your own:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+REACT_APP_MAGIC_PUBLISHABLE_KEY=pk_live_123...
+```
 
-### `yarn build`
+## Event Handling
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+There are two flows demonstrated in this app for which events must be handled to successfully authenticate a user. The main flow is the login flow, the other is the device verification flow.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Events
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Email OTP**
 
-### `yarn eject`
+| Event Name          | Definition                                                                      |
+| ------------------- | ------------------------------------------------------------------------------- |
+| `email-otp-sent`    | Dispatched when the OTP email has been successfully sent from the Magic server. |
+| `verify-email-otp`  | Emit along with the OTP to verify the code from user.                           |
+| `invalid-email-otp` | Dispatched when the OTP sent fails verification.                                |
+| `cancel`            | Emit to cancel the login request.                                               |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Device Verification**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| Event Name                         | Definition                                                             |
+| ---------------------------------- | ---------------------------------------------------------------------- |
+| `device-needs-approval`            | Dispatched when the device is unrecognized and requires user approval. |
+| `device-verification-email-sent`   | Dispatched when the device verification email is sent.                 |
+| `device-approved`                  | Dispatched when the user has approved the unrecongized device.         |
+| `device-verification-link-expired` | Dispatched when the email verification email has expired.              |
+| `device-retry`                     | Emit to restart the device registration flow.                          |
