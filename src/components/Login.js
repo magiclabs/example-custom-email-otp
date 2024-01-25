@@ -83,7 +83,8 @@ export default function Login({ setUser }) {
 
   const handleCancel = () => {
     try {
-      otpLogin.emit("cancel");
+      // otpLogin.emit("cancel");
+      setShowOTPModal(false);
 
       console.log("%cUser canceled login.", "color: orange");
     } catch (err) {
@@ -100,10 +101,20 @@ export default function Login({ setUser }) {
           setShowDeviceRegistrationModal={setShowDeviceRegistrationModal}
         />
       ) : showOTPModal ? (
-        <OTPModal login={otpLogin} handleCancel={handleCancel} />
+        <OTPModal login={otpLogin} handleCancel={handleCancel}/>
       ) : (
-        <EmailForm handleEmailLoginCustom={handleEmailLoginCustom} />
+        <EmailForm handleEmailLoginCustom={handleEmailLoginCustom}/>
       )}
+
+      <div>
+        <button className="ok-button" onClick={() => {
+          magic.user.isLoggedIn().then((isLoggedIn) => {
+            alert("isLoggedIn:" + isLoggedIn)
+          });
+        }}>
+          is logged in
+        </button>
+      </div>
     </div>
   );
 }
