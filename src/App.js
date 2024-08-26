@@ -8,6 +8,7 @@ import LoginForm from "./components/Login.js";
 import Logout from "./components/Logout.js";
 import UserInfo from "./components/UserInfo.js";
 import Footer from "./components/Footer.js";
+import ShowSettings from "./components/ShowSettings.js";
 
 function App() {
   const [user, setUser] = useState();
@@ -44,6 +45,7 @@ function App() {
         ) : user?.issuer ? (
           <div className="user-container">
             <UserInfo userInfo={user} />
+            <ShowSettings />
             <Logout setUser={setUser} />
           </div>
         ) : (

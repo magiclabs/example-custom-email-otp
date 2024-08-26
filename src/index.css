@@ -427,6 +427,23 @@ td {
 }
 
 /*
+  SETTINGS
+*/
+
+.settings-button {
+  width: 25%;
+  min-width: fit-content;
+
+  margin: 0 auto;
+  padding: 0.7em;
+  
+  font-size: 1.2em;
+  font-family: 'Alkatra';
+  color: var(--color-palette-3);
+  background-color: var(--color-palette-1);
+}
+
+/*
   MEDIA QUERIES
 */
 
@@ -467,6 +484,10 @@ td {
   }
 
   .cancel-button {
+    width: 33%;
+  }
+
+  .settings-button {
     width: 33%;
   }
 

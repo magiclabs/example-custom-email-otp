@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function OTPModal({ login, handleCancel }) {
+export default function MFAModal({ login, handleCancel }) {
   const [passcode, setPasscode] = useState("");
   const [retries, setRetries] = useState(2);
   const [message, setMessage] = useState();
@@ -13,11 +13,11 @@ export default function OTPModal({ login, handleCancel }) {
     setRetries((r) => r - 1);
     setPasscode("");
 
-    // Send OTP for verification
-    login.emit("verify-email-otp", passcode);
+    // Send MFA OTP for verification
+    login.emit("verify-mfa-code", passcode);
 
-    login.on("invalid-email-otp", () => {
-      // User entered invalid OTP
+    login.on("invalid-mfa-otp", () => {
+      // User entered invalid MFA OTP
       setDisabled(false);
 
       if (!retries) {
@@ -26,9 +26,9 @@ export default function OTPModal({ login, handleCancel }) {
         // Cancel the login
         login.emit("cancel");
       } else {
-        // Prompt the user again for the OTP
+        // Prompt the user again for the MFA OTP
         setMessage(
-          `Incorrect code. Please enter OTP again. ${retries} ${
+          `Incorrect code. Please enter MFA OTP again. ${retries} ${
             retries === 1 ? "retry" : "retries"
           } left.`
         );
@@ -38,7 +38,7 @@ export default function OTPModal({ login, handleCancel }) {
 
   return (
     <div className="modal email-otp">
-      <h1>enter the one-time passcode sent to your email</h1>
+      <h1>enter the code from your authenticator app</h1>
       
       <div className="message-wrapper">
         {message && <code id="otp-message">{message}</code>}

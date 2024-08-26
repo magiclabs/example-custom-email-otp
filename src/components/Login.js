@@ -3,9 +3,11 @@ import { magic } from "../lib/magic.js";
 import OTPModal from "./OTPModal.js";
 import EmailForm from "./EmailForm.js";
 import DeviceRegistration from "./DeviceRegistration.js";
+import MFAModal from "./MFAModal.js";
 
 export default function Login({ setUser }) {
   const [showOTPModal, setShowOTPModal] = useState(false);
+  const [showMFAModal, setShowMFAModal] = useState(false);
   const [showDeviceRegistrationModal, setShowDeviceRegistrationModal] =
     useState(false);
   const [otpLogin, setOtpLogin] = useState();
@@ -19,24 +21,6 @@ export default function Login({ setUser }) {
         deviceCheckUI: false,
       });
       setOtpLogin(otpLogin);
-
-      /* EVENT HANDLING
-      
-        type LoginWithEmailOTPEventHandlers = {
-          'email-otp-sent': () => void;
-          'verify-email-otp': (otp: string) => void;
-          'invalid-email-otp': () => void;
-          cancel: () => void;
-        };
-
-        type DeviceVerificationEventHandlers = {
-          'device-needs-approval`: () => void;
-          'device-verification-email-sent`: () => void;
-          'device-approved`: () => void;
-          'device-verification-link-expired`: () => void;
-          device-retry: () => void;
-        }
-      */
 
       otpLogin
         .on("device-needs-approval", () => {
@@ -60,14 +44,23 @@ export default function Login({ setUser }) {
           console.log(`DID Token: %c${result}`, "color: orange");
         })
         .catch((err) => {
-          console.log("%cError caught during login:\n", "color: orange");
+          console.log("%cError caught during login:\n", "color: red");
           console.error(err);
+          setOtpLogin();
         })
         .on("settled", () => {
           setOtpLogin();
           setShowOTPModal(false);
+          setShowMFAModal(false);
           setShowDeviceRegistrationModal(false);
+        })
+        .on("mfa-sent-handle", (mfaHandle) => {
+          // Display the MFA modal
+
+          setShowOTPModal(false);
+          setShowMFAModal(true);
         });
+
     } catch (err) {
       console.error(err);
     }
@@ -101,6 +94,8 @@ export default function Login({ setUser }) {
         />
       ) : showOTPModal ? (
         <OTPModal login={otpLogin} handleCancel={handleCancel} />
+      ) : showMFAModal ? (
+        <MFAModal login={otpLogin} handleCancel={handleCancel} />
       ) : (
         <EmailForm handleEmailLoginCustom={handleEmailLoginCustom} />
       )}
