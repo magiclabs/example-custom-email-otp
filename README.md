@@ -47,3 +47,10 @@ There are two flows demonstrated in this app for which events must be handled to
 | `device-approved`                  | Dispatched when the user has approved the unrecongized device.         |
 | `device-verification-link-expired` | Dispatched when the email verification email has expired.              |
 | `device-retry`                     | Emit to restart the device registration flow.                          |
+
+**Multi-Factor Auth**
+| Event Name | Definition |
+| ---------------------------------- | ---------------------------------------------------------------------- |
+| `mfa-sent-handle` | Dispatched when the MFA OTP is ready to be received.                                    |
+| `verify-mfa-code` | Emit along with the MFA OTP to verify the code from user.                               |
+| `invalid-mfa-otp` | Dispatched when the MFA OTP sent fails verification.                                    |

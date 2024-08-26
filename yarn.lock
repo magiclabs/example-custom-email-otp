@@ -1646,24 +1646,24 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@magic-sdk/commons@^15.3.1":
-  version "15.3.1"
-  resolved "https://registry.yarnpkg.com/@magic-sdk/commons/-/commons-15.3.1.tgz#195f9cfdfc49c8f21d6e08117815217c8573ba2d"
-  integrity sha512-oAY6CxD/n+58+oFf/8+cFEx3+eQ90P5mV/hr8xJoWyRmx2DOzePQxHYoL5UO7j2EcYOeVLGhydw/1RiS4UarZQ==
+"@magic-sdk/commons@^24.5.0":
+  version "24.5.0"
+  resolved "https://registry.yarnpkg.com/@magic-sdk/commons/-/commons-24.5.0.tgz#94b82bf433f6978efd6f8f99bc4a5a37a91755fb"
+  integrity sha512-GxHcBskbpvadNeIIC9H/2nLKkxWRiVfTBek7G2dCNwr//9oZUmY/8gAJunAPj2HU3Yl9PVtms07g3YBba9nOUA==
 
-"@magic-sdk/provider@^19.3.1":
-  version "19.3.1"
-  resolved "https://registry.yarnpkg.com/@magic-sdk/provider/-/provider-19.3.1.tgz#86929a927668fd53f0d6c0be45254942477cc189"
-  integrity sha512-7Rda6jqM03evNCJH0sHTLBN0ubS7C8UtQFb2VvmUp6egRn1T0GOnxz0GmkSgVjnya39UTR9JC/u1iCqGvQ5+Yw==
+"@magic-sdk/provider@^28.5.0":
+  version "28.5.0"
+  resolved "https://registry.yarnpkg.com/@magic-sdk/provider/-/provider-28.5.0.tgz#edc86aca804a9f09d20c2ac1ca8e007917ba50de"
+  integrity sha512-at1Tfp7BnnzdSOvpSfHXup3q+JJ8MpB0S7C8BJRQQflVObz5M1i1xDPjF5ZhY0MZT34Mya9jvMChQdWBLI0bkA==
   dependencies:
-    "@magic-sdk/types" "^16.3.1"
+    "@magic-sdk/types" "^24.3.0"
     eventemitter3 "^4.0.4"
     web3-core "1.5.2"
 
-"@magic-sdk/types@^16.3.1":
-  version "16.3.1"
-  resolved "https://registry.yarnpkg.com/@magic-sdk/types/-/types-16.3.1.tgz#6e94c777f48c303bfe7c85172fe195db419a6e5d"
-  integrity sha512-MRs1PpVozTvs5iSuJHZpiI1283RvsaWUUcDA8hw5IZr7SBRyhlnXQJaIWwBXaYwbFfNvInJIdMJZwZoBfh192A==
+"@magic-sdk/types@^24.3.0":
+  version "24.3.0"
+  resolved "https://registry.yarnpkg.com/@magic-sdk/types/-/types-24.3.0.tgz#93b0b1c500a215a6f4c0eee9305c3f12ef3b14ec"
+  integrity sha512-Kc5hQEh4GOtNzuzR4oqr2693hGuNFVeHrDg9wJBqWHr0McgTPaYfVNiQG8THBpxaYMIcjAuJRP1HM0O/9nIuag==
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
@@ -6674,14 +6674,14 @@ lz-string@^1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.5.0.tgz#c1ab50f77887b712621201ba9fd4e3a6ed099941"
   integrity sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==
 
-magic-sdk@^19.3.1:
-  version "19.3.1"
-  resolved "https://registry.yarnpkg.com/magic-sdk/-/magic-sdk-19.3.1.tgz#79f19ba97bb9f2a4b902c981f5b1c7d944bcbc1e"
-  integrity sha512-+EX12307WS0PJ2MAZ1DcXWZYAHHLeD1BdpABgFHmq5k8zNkwZp95fozhpcmiuxIqLXghZnyrTMqVBAY49ohzWA==
+magic-sdk@^28.5.0:
+  version "28.5.0"
+  resolved "https://registry.yarnpkg.com/magic-sdk/-/magic-sdk-28.5.0.tgz#471e2a2e1a2a04c16a7ead9fe6aba3ae999b6296"
+  integrity sha512-cO2/mpMMzzlsUaCUYvyUFcWIPUcpTVKqiPJ1jLxHtAdwaKC3yi9RiREMzguGWRJb2NpexSJTArkdC8s66UUZlg==
   dependencies:
-    "@magic-sdk/commons" "^15.3.1"
-    "@magic-sdk/provider" "^19.3.1"
-    "@magic-sdk/types" "^16.3.1"
+    "@magic-sdk/commons" "^24.5.0"
+    "@magic-sdk/provider" "^28.5.0"
+    "@magic-sdk/types" "^24.3.0"
     localforage "^1.7.4"
 
 magic-string@^0.25.0, magic-string@^0.25.7:
