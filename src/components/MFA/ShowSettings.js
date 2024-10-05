@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
 
-export default function ShowSettings({ userInfo, setShowMFASettings }) {
+export default function ShowSettings({ setShowMFASettings }) {
   const { user } = useContext(UserContext);
 
   const handleMFASettings = async () => {
