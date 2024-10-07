@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { magic } from "./lib/magic.js";
 
 // components
@@ -8,10 +8,13 @@ import LoginForm from "./components/Login.js";
 import Logout from "./components/Logout.js";
 import UserInfo from "./components/UserInfo.js";
 import Footer from "./components/Footer.js";
-import ShowSettings from "./components/ShowSettings.js";
+import ShowSettings from "./components/MFA/ShowSettings.js";
+import EnableMFA from "./components/MFA/EnableMFA.js";
+import UserContext from "./context/UserContext.js";
 
 function App() {
-  const [user, setUser] = useState();
+  const { user, setUser } = useContext(UserContext);
+  const [showMFASettings, setShowMFASettings] = useState(false);
 
   useEffect(() => {
     setUser({ loading: true });
@@ -20,21 +23,22 @@ function App() {
       .isLoggedIn()
       .then((isLoggedIn) => {
         if (isLoggedIn) {
-          magic.user.getMetadata().then((userData) => {
+          magic.user.getInfo().then((userData) => {
             setUser(userData);
-            // fetchBalance(userData.publicAddress);
           });
         } else {
-          setUser({ user: null });
+          setUser({ user: undefined });
         }
       })
       .catch((err) => {
-        console.log("Error, isLoggedIn():");
+        console.log("Error getting session status");
         console.error(err);
-        magic.user.logout().then(console.log);
-        setUser({ user: null });
+        magic.user.logout().then((isLoggedOut) => {
+          console.log("User is logged out: ", isLoggedOut);
+          setUser({ user: undefined });
+        });
       });
-  }, []);
+  }, [setUser]);
 
   return (
     <>
@@ -45,11 +49,24 @@ function App() {
         ) : user?.issuer ? (
           <div className="user-container">
             <UserInfo userInfo={user} />
-            <ShowSettings />
+            <ShowSettings
+              userInfo={user}
+              setShowMFASettings={setShowMFASettings}
+            />
             <Logout setUser={setUser} />
           </div>
         ) : (
           <LoginForm setUser={setUser} />
+        )}
+
+        {showMFASettings === true ? (
+          !user.ismfaEnabled ? (
+            <EnableMFA setShowMFASettings={setShowMFASettings} />
+          ) : (
+            "DISABLE MFA PLACEHOLDER"
+          )
+        ) : (
+          ""
         )}
       </main>
 

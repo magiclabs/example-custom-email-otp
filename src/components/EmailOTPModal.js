@@ -37,13 +37,15 @@ export default function EmailOTPModal({ login, handleCancel }) {
   };
 
   return (
-    <div className="modal email-otp">
+    <div className="modal">
       <h1>enter the one-time passcode sent to your email</h1>
-      
-      <div className="message-wrapper">
-        {message && <code id="otp-message">{message}</code>}
-      </div>
-      
+
+      {message && (
+        <div className="message-wrapper">
+          <code id="otp-message">{message}</code>
+        </div>
+      )}
+
       <form className="otp-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -53,11 +55,9 @@ export default function EmailOTPModal({ login, handleCancel }) {
           value={passcode}
           onChange={(e) => setPasscode(e.target.value.replace(" ", ""))}
         />
-        <button className="ok-button" type="submit" disabled={disabled}>
-          Submit
-        </button>
       </form>
       <button
+        type="submit"
         className="cancel-button"
         onClick={() => {
           handleCancel();
@@ -66,6 +66,9 @@ export default function EmailOTPModal({ login, handleCancel }) {
         disabled={disabled}
       >
         cancel
+      </button>
+      <button className="ok-button" disabled={disabled} onClick={handleSubmit}>
+        Submit
       </button>
     </div>
   );

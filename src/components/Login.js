@@ -94,7 +94,7 @@ export default function Login({ setUser }) {
       ) : showEmailOTPModal ? (
         <EmailOTPModal login={otpLogin} handleCancel={handleCancel} />
       ) : showMFAOTPModal ? (
-        <MFAOTPModal login={otpLogin} handleCancel={handleCancel} />
+        <MFAOTPModal handle={otpLogin} handleCancel={handleCancel} />
       ) : (
         <EmailForm handleEmailLoginCustom={handleEmailLoginCustom} />
       )}

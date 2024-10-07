@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-export default function MFAOTPModal({ login, handleCancel }) {
+export default function MFAOTPModal({ handle, handleCancel }) {
   const [passcode, setPasscode] = useState("");
   const [retries, setRetries] = useState(2);
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -14,17 +14,22 @@ export default function MFAOTPModal({ login, handleCancel }) {
     setPasscode("");
 
     // Send MFA OTP for verification
-    login.emit("verify-mfa-code", passcode);
+    handle.emit("verify-mfa-code", passcode);
 
-    login.on("invalid-mfa-otp", () => {
+    handle.on("invalid-mfa-otp", (res) => {
+      console.log("invalid-mfa-otp");
+
+      if (res && res.errorCode) {
+        console.log("Error code:", res.errorCode);
+      }
+
       // User entered invalid MFA OTP
       setDisabled(false);
 
       if (!retries) {
         setMessage("No more retries. Please try again later.");
 
-        // Cancel the login
-        login.emit("cancel");
+        handleCancel();
       } else {
         // Prompt the user again for the MFA OTP
         setMessage(
@@ -37,12 +42,14 @@ export default function MFAOTPModal({ login, handleCancel }) {
   };
 
   return (
-    <div className="modal email-otp">
+    <div className="modal">
       <h1>enter the code from your authenticator app</h1>
 
-      <div className="message-wrapper">
-        {message && <code id="otp-message">{message}</code>}
-      </div>
+      {message && (
+        <div className="message-wrapper">
+          <code id="otp-message">{message}</code>
+        </div>
+      )}
 
       <form className="otp-form" onSubmit={handleSubmit}>
         <input
@@ -53,20 +60,27 @@ export default function MFAOTPModal({ login, handleCancel }) {
           value={passcode}
           onChange={(e) => setPasscode(e.target.value.replace(" ", ""))}
         />
-        <button className="ok-button" type="submit" disabled={disabled}>
+      </form>
+
+      <div className="modal-footer">
+        <button
+          className="cancel-button"
+          onClick={() => {
+            handleCancel();
+            setDisabled(false);
+          }}
+          disabled={disabled}
+        >
+          cancel
+        </button>
+        <button
+          className="ok-button mfa-otp-submit"
+          disabled={disabled}
+          onClick={handleSubmit}
+        >
           Submit
         </button>
-      </form>
-      <button
-        className="cancel-button"
-        onClick={() => {
-          handleCancel();
-          setDisabled(false);
-        }}
-        disabled={disabled}
-      >
-        cancel
-      </button>
+      </div>
     </div>
   );
 }
