@@ -1646,24 +1646,24 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@magic-sdk/commons@^24.5.0":
-  version "24.5.0"
-  resolved "https://registry.yarnpkg.com/@magic-sdk/commons/-/commons-24.5.0.tgz#94b82bf433f6978efd6f8f99bc4a5a37a91755fb"
-  integrity sha512-GxHcBskbpvadNeIIC9H/2nLKkxWRiVfTBek7G2dCNwr//9oZUmY/8gAJunAPj2HU3Yl9PVtms07g3YBba9nOUA==
+"@magic-sdk/commons@^24.11.0":
+  version "24.11.0"
+  resolved "https://registry.yarnpkg.com/@magic-sdk/commons/-/commons-24.11.0.tgz#319432f5b11e802a3632e6925684199ad9a5f57a"
+  integrity sha512-RoBVb7XlfUH5Or35mQApealfa4TRImtYBble8cxTW9gdax/H3dutlO01wY+jaHJ/boColH9XwcmrIHPP/kKhiA==
 
-"@magic-sdk/provider@^28.5.0":
-  version "28.5.0"
-  resolved "https://registry.yarnpkg.com/@magic-sdk/provider/-/provider-28.5.0.tgz#edc86aca804a9f09d20c2ac1ca8e007917ba50de"
-  integrity sha512-at1Tfp7BnnzdSOvpSfHXup3q+JJ8MpB0S7C8BJRQQflVObz5M1i1xDPjF5ZhY0MZT34Mya9jvMChQdWBLI0bkA==
+"@magic-sdk/provider@^28.11.0":
+  version "28.11.0"
+  resolved "https://registry.yarnpkg.com/@magic-sdk/provider/-/provider-28.11.0.tgz#63872bf074b46660ecb9df06c3cb23ec757e1773"
+  integrity sha512-JNrcIL3K/1pOIbpBIcGY2w+ptjFsGfRQuf2W8naKH2Ap6QFDM9iHXt7MjEPBvk2RJ1pz/Nqz+NdsS7InlK62JA==
   dependencies:
-    "@magic-sdk/types" "^24.3.0"
+    "@magic-sdk/types" "^24.9.0"
     eventemitter3 "^4.0.4"
     web3-core "1.5.2"
 
-"@magic-sdk/types@^24.3.0":
-  version "24.3.0"
-  resolved "https://registry.yarnpkg.com/@magic-sdk/types/-/types-24.3.0.tgz#93b0b1c500a215a6f4c0eee9305c3f12ef3b14ec"
-  integrity sha512-Kc5hQEh4GOtNzuzR4oqr2693hGuNFVeHrDg9wJBqWHr0McgTPaYfVNiQG8THBpxaYMIcjAuJRP1HM0O/9nIuag==
+"@magic-sdk/types@^24.9.0":
+  version "24.9.0"
+  resolved "https://registry.yarnpkg.com/@magic-sdk/types/-/types-24.9.0.tgz#e2c81509f31e1b6f89a6a886551a7c2b53b86cbc"
+  integrity sha512-cAonDympI1HZbtbgzANgd8t4ZWN3y2ZCGluW0Todz6WCnhSseY1xH9DMYnufYkSCx5S11HXnNGzP64aeL31oKQ==
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
@@ -6616,6 +6616,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
+
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -6674,14 +6679,14 @@ lz-string@^1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.5.0.tgz#c1ab50f77887b712621201ba9fd4e3a6ed099941"
   integrity sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==
 
-magic-sdk@^28.5.0:
-  version "28.5.0"
-  resolved "https://registry.yarnpkg.com/magic-sdk/-/magic-sdk-28.5.0.tgz#471e2a2e1a2a04c16a7ead9fe6aba3ae999b6296"
-  integrity sha512-cO2/mpMMzzlsUaCUYvyUFcWIPUcpTVKqiPJ1jLxHtAdwaKC3yi9RiREMzguGWRJb2NpexSJTArkdC8s66UUZlg==
+magic-sdk@^28.11.0:
+  version "28.11.0"
+  resolved "https://registry.yarnpkg.com/magic-sdk/-/magic-sdk-28.11.0.tgz#c5859627416feeff87ace3ba216a4e9f2a6aa42e"
+  integrity sha512-e2LA9rmEQH/rvHuD5oivKAjh56wnnbcPul2NPe4I/Mscn3Mu7J5D9BIQjAPNyxliYsXpSy/3OA+hCI68tOIMmw==
   dependencies:
-    "@magic-sdk/commons" "^24.5.0"
-    "@magic-sdk/provider" "^28.5.0"
-    "@magic-sdk/types" "^24.3.0"
+    "@magic-sdk/commons" "^24.11.0"
+    "@magic-sdk/provider" "^28.11.0"
+    "@magic-sdk/types" "^24.9.0"
     localforage "^1.7.4"
 
 magic-string@^0.25.0, magic-string@^0.25.7:
@@ -7981,6 +7986,11 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==
 
+qrcode-generator@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/qrcode-generator/-/qrcode-generator-1.4.4.tgz#63f771224854759329a99048806a53ed278740e7"
+  integrity sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==
+
 qs@6.11.0:
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.11.0.tgz#fd0d963446f7a65e1367e01abd85429453f0c37a"
@@ -8110,6 +8120,14 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-qrcode-logo@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-qrcode-logo/-/react-qrcode-logo-3.0.0.tgz#71cb43ddef9b338cc151800968276ca210086d11"
+  integrity sha512-2+vZ3GNBdUpYxIKyt6SFZsDGXa0xniyUQ0wPI4O0hJTzRjttPIx1pPnH9IWQmp/4nDMoN47IBhi3Breu1KudYw==
+  dependencies:
+    lodash.isequal "^4.5.0"
+    qrcode-generator "^1.4.4"
 
 react-refresh@^0.11.0:
   version "0.11.0"

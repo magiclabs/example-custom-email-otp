@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { magic } from "../lib/magic.js";
-import OTPModal from "./OTPModal.js";
+import EmailOTPModal from "./EmailOTPModal.js";
 import EmailForm from "./EmailForm.js";
 import DeviceRegistration from "./DeviceRegistration.js";
-import MFAModal from "./MFAModal.js";
+import MFAOTPModal from "./MFA/MFAOTPModal.js";
 
 export default function Login({ setUser }) {
-  const [showOTPModal, setShowOTPModal] = useState(false);
-  const [showMFAModal, setShowMFAModal] = useState(false);
+  const [showEmailOTPModal, setShowEmailOTPModal] = useState(false);
+  const [showMFAOTPModal, setShowMFAOTPModal] = useState(false);
   const [showDeviceRegistrationModal, setShowDeviceRegistrationModal] =
     useState(false);
   const [otpLogin, setOtpLogin] = useState();
@@ -36,7 +36,7 @@ export default function Login({ setUser }) {
         .on("email-otp-sent", () => {
           // The email has been sent to the user
 
-          setShowOTPModal(true);
+          setShowEmailOTPModal(true);
         })
         .on("done", (result) => {
           handleGetMetadata();
@@ -50,24 +50,23 @@ export default function Login({ setUser }) {
         })
         .on("settled", () => {
           setOtpLogin();
-          setShowOTPModal(false);
-          setShowMFAModal(false);
+          setShowEmailOTPModal(false);
+          setShowMFAOTPModal(false);
           setShowDeviceRegistrationModal(false);
         })
         .on("mfa-sent-handle", (mfaHandle) => {
-          // Display the MFA modal
+          // Display the MFA OTP modal
 
-          setShowOTPModal(false);
-          setShowMFAModal(true);
+          setShowEmailOTPModal(false);
+          setShowMFAOTPModal(true);
         });
-
     } catch (err) {
       console.error(err);
     }
   };
 
   const handleGetMetadata = async () => {
-    const metadata = await magic.user.getMetadata();
+    const metadata = await magic.user.getInfo();
 
     setUser(metadata);
 
@@ -92,10 +91,10 @@ export default function Login({ setUser }) {
           handleCancel={handleCancel}
           setShowDeviceRegistrationModal={setShowDeviceRegistrationModal}
         />
-      ) : showOTPModal ? (
-        <OTPModal login={otpLogin} handleCancel={handleCancel} />
-      ) : showMFAModal ? (
-        <MFAModal login={otpLogin} handleCancel={handleCancel} />
+      ) : showEmailOTPModal ? (
+        <EmailOTPModal login={otpLogin} handleCancel={handleCancel} />
+      ) : showMFAOTPModal ? (
+        <MFAOTPModal handle={otpLogin} handleCancel={handleCancel} />
       ) : (
         <EmailForm handleEmailLoginCustom={handleEmailLoginCustom} />
       )}

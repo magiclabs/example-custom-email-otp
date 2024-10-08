@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function MFAModal({ login, handleCancel }) {
+export default function EmailOTPModal({ login, handleCancel }) {
   const [passcode, setPasscode] = useState("");
   const [retries, setRetries] = useState(2);
   const [message, setMessage] = useState();
@@ -13,11 +13,11 @@ export default function MFAModal({ login, handleCancel }) {
     setRetries((r) => r - 1);
     setPasscode("");
 
-    // Send MFA OTP for verification
-    login.emit("verify-mfa-code", passcode);
+    // Send OTP for verification
+    login.emit("verify-email-otp", passcode);
 
-    login.on("invalid-mfa-otp", () => {
-      // User entered invalid MFA OTP
+    login.on("invalid-email-otp", () => {
+      // User entered invalid OTP
       setDisabled(false);
 
       if (!retries) {
@@ -26,9 +26,9 @@ export default function MFAModal({ login, handleCancel }) {
         // Cancel the login
         login.emit("cancel");
       } else {
-        // Prompt the user again for the MFA OTP
+        // Prompt the user again for the OTP
         setMessage(
-          `Incorrect code. Please enter MFA OTP again. ${retries} ${
+          `Incorrect code. Please enter OTP again. ${retries} ${
             retries === 1 ? "retry" : "retries"
           } left.`
         );
@@ -37,13 +37,15 @@ export default function MFAModal({ login, handleCancel }) {
   };
 
   return (
-    <div className="modal email-otp">
-      <h1>enter the code from your authenticator app</h1>
-      
-      <div className="message-wrapper">
-        {message && <code id="otp-message">{message}</code>}
-      </div>
-      
+    <div className="modal">
+      <h1>enter the one-time passcode sent to your email</h1>
+
+      {message && (
+        <div className="message-wrapper">
+          <code id="otp-message">{message}</code>
+        </div>
+      )}
+
       <form className="otp-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -53,11 +55,9 @@ export default function MFAModal({ login, handleCancel }) {
           value={passcode}
           onChange={(e) => setPasscode(e.target.value.replace(" ", ""))}
         />
-        <button className="ok-button" type="submit" disabled={disabled}>
-          Submit
-        </button>
       </form>
       <button
+        type="submit"
         className="cancel-button"
         onClick={() => {
           handleCancel();
@@ -66,6 +66,9 @@ export default function MFAModal({ login, handleCancel }) {
         disabled={disabled}
       >
         cancel
+      </button>
+      <button className="ok-button" disabled={disabled} onClick={handleSubmit}>
+        Submit
       </button>
     </div>
   );
