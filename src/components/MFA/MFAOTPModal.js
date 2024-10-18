@@ -7,38 +7,45 @@ export default function MFAOTPModal({ handle, handleCancel }) {
   const [disabled, setDisabled] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    setDisabled(true);
-    setRetries((r) => r - 1);
-    setPasscode("");
+      setDisabled(true);
+      setRetries((r) => r - 1);
+      setPasscode("");
 
-    // Send MFA OTP for verification
-    handle.emit("verify-mfa-code", passcode);
+      // Send MFA OTP for verification
+      handle.emit("verify-mfa-code", passcode);
 
-    handle.on("invalid-mfa-otp", (res) => {
-      console.log("invalid-mfa-otp");
+      handle
+        .on("invalid-mfa-otp", (res) => {
+          if (res && res.errorCode) {
+            console.log("Error code:", res.errorCode);
+          }
 
-      if (res && res.errorCode) {
-        console.log("Error code:", res.errorCode);
-      }
+          // User entered invalid MFA OTP
+          setDisabled(false);
 
-      // User entered invalid MFA OTP
-      setDisabled(false);
+          if (!retries) {
+            setMessage("No more retries. Please try again later.");
 
-      if (!retries) {
-        setMessage("No more retries. Please try again later.");
-
-        handleCancel();
-      } else {
-        // Prompt the user again for the MFA OTP
-        setMessage(
-          `Incorrect code. Please enter MFA OTP again. ${retries} ${
-            retries === 1 ? "retry" : "retries"
-          } left.`
-        );
-      }
-    });
+            handleCancel();
+          } else {
+            // Prompt the user again for the MFA OTP
+            setMessage(
+              `Incorrect code. Please enter MFA OTP again. ${retries} ${
+                retries === 1 ? "retry" : "retries"
+              } left.`
+            );
+          }
+        })
+        .on("error", (err) => {
+          console.error(err);
+        });
+    } catch (err) {
+      console.log("Error submitting MFA OTP");
+      console.error(err);
+    }
   };
 
   return (
