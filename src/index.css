@@ -587,7 +587,6 @@ td {
 
 .key-wrapper {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   gap: 0.5em;
   margin: auto;
@@ -606,11 +605,33 @@ td {
   background-color: #f7f7ff;
   cursor: pointer;
 }
+.span-recovery {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  color: var(--color-palette-4);
+}
 .span-key-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   color: var(--color-palette-1);
+}
+
+.emoji-confirm {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  color: var(--color-palette-3);
+
+  margin: auto;
+  border-radius: 10px;
+  padding: 1em;
+
+  background-color: #495867;
+  font-size: xx-large;
 }
 
 .span-page3-wrapper {

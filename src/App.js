@@ -11,6 +11,7 @@ import Footer from "./components/Footer.js";
 import ShowSettings from "./components/MFA/ShowSettings.js";
 import EnableMFA from "./components/MFA/EnableMFA.js";
 import UserContext from "./context/UserContext.js";
+import DisableMFA from "./components/MFA/DisableMFA.js";
 
 function App() {
   const { user, setUser } = useContext(UserContext);
@@ -60,10 +61,10 @@ function App() {
         )}
 
         {showMFASettings === true ? (
-          !user.ismfaEnabled ? (
-            <EnableMFA setShowMFASettings={setShowMFASettings} />
+          user.isMfaEnabled ? (
+            <DisableMFA setShowMFASettings={setShowMFASettings} />
           ) : (
-            "DISABLE MFA PLACEHOLDER"
+            <EnableMFA setShowMFASettings={setShowMFASettings} />
           )
         ) : (
           ""
