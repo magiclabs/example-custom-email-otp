@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { magic } from "../../lib/magic";
 import { QRCode } from "react-qrcode-logo";
 import authy from "../../SVG/Authy.svg";
@@ -10,7 +10,6 @@ import MFAOTPModal from "./MFAOTPModal";
 
 export default function EnableMFA({ setShowMFASettings }) {
   const { user, setUser } = useContext(UserContext);
-  const [passcode, setPasscode] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [mfaHandle, setMFAHandle] = useState(undefined);
   const [mfaKey, setMFAKey] = useState();
@@ -20,7 +19,7 @@ export default function EnableMFA({ setShowMFASettings }) {
 
   const handleCancel = () => {
     try {
-      mfaHandle.emit("cancel-mfa-setup");
+      mfaHandle && mfaHandle.emit("cancel-mfa-setup");
 
       setDisabled(false);
       setShowMFASettings(false);
@@ -33,24 +32,24 @@ export default function EnableMFA({ setShowMFASettings }) {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (mfaPage === 0) {
       handleEnableMFA();
       setMFAPage((current) => current + 1);
     } else if (mfaPage === 1) {
       setMFAPage((current) => current + 1);
-    } else if (mfaPage === 2) {
-      mfaHandle.emit("verify-mfa-code", Number(passcode));
     } else {
       setMFAHandle(null);
       setShowMFASettings(false);
+
+      // update user info now that user.isMFAEnabled is true
+      const updatedUserInfo = await magic.user.getInfo();
+      setUser(updatedUserInfo);
     }
   };
 
-  const handleEnableMFA = useCallback(async () => {
+  const handleEnableMFA = async () => {
     try {
-      setPasscode("");
-
       const mfaHandle = magic.user.enableMFA({ showUI: false });
       setMFAHandle(mfaHandle);
 
@@ -67,10 +66,6 @@ export default function EnableMFA({ setShowMFASettings }) {
 
           setRecoveryCode(recoveryCode);
           setMFAPage((currentPage) => currentPage + 1);
-
-          // update user info now that user.isMFAEnabled is true
-          const updatedUserInfo = await magic.user.getInfo();
-          setUser(updatedUserInfo);
         })
         .on("error", (error) => {
           console.log("error configuring MFA");
@@ -80,7 +75,7 @@ export default function EnableMFA({ setShowMFASettings }) {
       console.error(error);
       setShowMFASettings(false);
     }
-  }, [setShowMFASettings]);
+  };
 
   const copyToClipboard = (text) => {
     navigator.clipboard
@@ -184,6 +179,8 @@ export default function EnableMFA({ setShowMFASettings }) {
               </div>
 
               <div className="key-wrapper">
+                <span className="span-recovery">Your recovery code</span>
+
                 <code
                   className="key-code"
                   onClick={() => copyToClipboard(recoveryCode)}
@@ -195,7 +192,6 @@ export default function EnableMFA({ setShowMFASettings }) {
                     className="copy-symbol-svg"
                   />
                 </code>
-                <span>Your recovery code</span>
               </div>
             </div>
           )}
