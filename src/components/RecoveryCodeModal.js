@@ -1,10 +1,38 @@
-import React, { useState } from "react";
-import { LoginWithEmailOTPEventEmit } from "magic-sdk";
+import React, { useState, useEffect } from "react";
+import {
+  LoginWithEmailOTPEventEmit,
+  LoginWithEmailOTPEventOnReceived,
+} from "magic-sdk";
 
 export default function RecoveryCodeModal({ handle, handleCancel }) {
   const [recoveryCode, setRecoveryCode] = useState("");
   const [message, setMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
+
+  // Add listener for InvalidRecoveryCode event
+  useEffect(() => {
+    if (!handle) return;
+
+    const invalidCodeListener = () => {
+      console.log("Invalid recovery code received");
+      setDisabled(false);
+      setMessage("Invalid recovery code. Please try again.");
+    };
+
+    // Register listener for InvalidRecoveryCode event
+    handle.on(
+      LoginWithEmailOTPEventOnReceived.InvalidRecoveryCode,
+      invalidCodeListener
+    );
+
+    // Clean up the listener when component unmounts
+    return () => {
+      handle.off(
+        LoginWithEmailOTPEventOnReceived.InvalidRecoveryCode,
+        invalidCodeListener
+      );
+    };
+  }, [handle]);
 
   // This component is only shown after RecoveryCodeSentHandle event has been received,
   // so we can directly submit the recovery code when the user clicks Submit.
