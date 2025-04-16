@@ -7,11 +7,12 @@ import EmojiSVGLogo from "../../SVG/EmojiSVGLogo.svg";
 import Copy from "../../SVG/Copy.svg";
 import UserContext from "../../context/UserContext";
 import MFAOTPModal from "./MFAOTPModal";
+import MFASettingsContext from "../../context/MFASettingsContext";
 
 export default function EnableMFA({ setShowMFASettings }) {
   const { user, setUser } = useContext(UserContext);
+  const { mfaSettings, setMFASettings } = useContext(MFASettingsContext);
   const [disabled, setDisabled] = useState(false);
-  const [mfaHandle, setMFAHandle] = useState(undefined);
   const [mfaKey, setMFAKey] = useState();
   const [mfaQR, setMFAQR] = useState();
   const [recoveryCode, setRecoveryCode] = useState("");
@@ -19,11 +20,11 @@ export default function EnableMFA({ setShowMFASettings }) {
 
   const handleCancel = () => {
     try {
-      mfaHandle && mfaHandle.emit("cancel-mfa-setup");
+      mfaSettings && mfaSettings.emit("cancel-mfa-setup");
 
       setDisabled(false);
       setShowMFASettings(false);
-      setMFAHandle(null);
+      setMFASettings(null);
 
       console.log("%cUser canceled MFA setup", "color: orange");
     } catch (err) {
@@ -39,7 +40,7 @@ export default function EnableMFA({ setShowMFASettings }) {
     } else if (mfaPage === 1) {
       setMFAPage((current) => current + 1);
     } else {
-      setMFAHandle(null);
+      setMFASettings(null);
       setShowMFASettings(false);
 
       // update user info now that user.isMFAEnabled is true
@@ -50,10 +51,10 @@ export default function EnableMFA({ setShowMFASettings }) {
 
   const handleEnableMFA = async () => {
     try {
-      const mfaHandle = magic.user.enableMFA({ showUI: false });
-      setMFAHandle(mfaHandle);
+      const mfaSettings = magic.user.enableMFA({ showUI: false });
+      setMFASettings(mfaSettings);
 
-      mfaHandle
+      mfaSettings
         .on("mfa-secret-generated", ({ QRCode, key }) => {
           console.log("mfa-secret-generated", QRCode, key);
 
@@ -164,9 +165,7 @@ export default function EnableMFA({ setShowMFASettings }) {
             </div>
           )}
 
-          {mfaPage === 2 && (
-            <MFAOTPModal handle={mfaHandle} handleCancel={handleCancel} />
-          )}
+          {mfaPage === 2 && <MFAOTPModal handleCancel={handleCancel} />}
 
           {mfaPage === 3 && (
             <div className="mfa-page-wrapper">
