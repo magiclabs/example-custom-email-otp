@@ -1,36 +1,45 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { magic } from "../../lib/magic";
 import UserContext from "../../context/UserContext";
 import MFAOTPModal from "./MFAOTPModal";
 import authy from "../../SVG/Authy.svg";
 import googleAuth from "../../SVG/GoogleAuthenticator.svg";
+import MFASettingsContext from "../../context/MFASettingsContext";
+import MFARecoveryModal from "./MFARecoveryModal";
 
 export default function DisableMFA({ setShowMFASettings }) {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
+  const { mfaSettings, setMFASettings } = useContext(MFASettingsContext);
+
+  const [setShowMFAOTPModal] = useState(false);
+  const [setShowMFARecoveryModal] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const [mfaHandle, setMFAHandle] = useState(undefined);
   const [mfaPage, setMFAPage] = useState(0);
 
-  const handleCancel = useCallback(() => {
+  const handleCancel = () => {
     try {
-      mfaHandle && mfaHandle.emit("cancel-mfa-disable");
+      mfaSettings && mfaSettings.emit("cancel-mfa-disable");
       setDisabled(false);
       setShowMFASettings(false);
-      setMFAHandle(undefined);
+      setMFASettings(undefined);
       console.log("%cUser canceled MFA setup", "color: orange");
     } catch (err) {
       console.log("Error canceling MFA setup");
       console.error(err);
     }
-  }, [mfaHandle, setShowMFASettings]);
+  };
 
   const handleNext = async () => {
     if (mfaPage === 0) {
       handleDisableMFA();
       setMFAPage((current) => current + 1);
+    } else if (mfaPage === 1) {
+      setMFAPage((current) => current + 2);
+    } else if (mfaPage === 3) {
+      setMFAPage(2);
     } else {
       setShowMFASettings(false);
-      setMFAHandle(undefined);
+      setMFASettings(undefined);
 
       // update user info now that user.isMFAEnabled is true
       const updatedUserInfo = await magic.user.getInfo();
@@ -39,9 +48,10 @@ export default function DisableMFA({ setShowMFASettings }) {
   };
 
   const handleDisableMFA = () => {
-    const mfaHandle = magic.user.disableMFA({ showUI: false });
-    setMFAHandle(mfaHandle);
-    mfaHandle
+    const mfaSettings = magic.user.disableMFA({ showUI: false });
+    setMFASettings(mfaSettings);
+
+    mfaSettings
       .on("mfa-code-requested", () => {
         // Dispatched when the user starts the disable MFA process.
         console.log("mfa-code-requested");
@@ -54,7 +64,7 @@ export default function DisableMFA({ setShowMFASettings }) {
       .on("error", (error) => {
         console.log("error configuring MFA");
         console.error(error);
-        setMFAHandle(undefined);
+        setMFASettings(undefined);
         setShowMFASettings(false);
       });
   };
@@ -90,7 +100,13 @@ export default function DisableMFA({ setShowMFASettings }) {
           )}
 
           {mfaPage === 1 && (
-            <MFAOTPModal handle={mfaHandle} handleCancel={handleCancel} />
+            <MFAOTPModal
+              handle={mfaSettings}
+              handleCancel={handleCancel}
+              setShowMFAOTPModal={setShowMFAOTPModal}
+              setShowMFARecoveryModal={setShowMFARecoveryModal}
+              handleNext={handleNext}
+            />
           )}
 
           {mfaPage === 2 && (
@@ -102,7 +118,17 @@ export default function DisableMFA({ setShowMFASettings }) {
             </>
           )}
 
-          {mfaPage !== 1 && (
+          {mfaPage === 3 && (
+            <div>
+              <MFARecoveryModal
+                handleCancel={handleCancel}
+                handleNext={handleNext}
+                setShowMFARecoveryModal={setShowMFARecoveryModal}
+              />
+            </div>
+          )}
+
+          {mfaPage !== 1 && mfaPage !== 3 && (
             <div className="mfa-buttons">
               <button
                 className="mfa-next-button ok-button"
