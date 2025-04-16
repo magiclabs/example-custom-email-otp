@@ -1,28 +1,31 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { magic } from "../lib/magic.js";
 import EmailOTPModal from "./EmailOTPModal.js";
 import EmailForm from "./EmailForm.js";
 import DeviceRegistration from "./DeviceRegistration.js";
 import MFAOTPModal from "./MFA/MFAOTPModal.js";
+import MFARecoveryModal from "./MFA/MFARecoveryModal.js";
+import LoginContext from "../context/LoginContext.js";
 
 export default function Login({ setUser }) {
   const [showEmailOTPModal, setShowEmailOTPModal] = useState(false);
   const [showMFAOTPModal, setShowMFAOTPModal] = useState(false);
+  const [showMFARecoveryModal, setShowMFARecoveryModal] = useState(false);
   const [showDeviceRegistrationModal, setShowDeviceRegistrationModal] =
     useState(false);
-  const [otpLogin, setOtpLogin] = useState();
+  const { login, setLogin } = useContext(LoginContext);
 
   const handleEmailLoginCustom = async (email) => {
     try {
-      setOtpLogin();
-      const otpLogin = magic.auth.loginWithEmailOTP({
+      setLogin();
+      const login = magic.auth.loginWithEmailOTP({
         email,
         showUI: false,
         deviceCheckUI: false,
       });
-      setOtpLogin(otpLogin);
+      setLogin(login);
 
-      otpLogin
+      login
         .on("device-needs-approval", () => {
           // is called when device is not recognized and requires approval
 
@@ -38,6 +41,12 @@ export default function Login({ setUser }) {
 
           setShowEmailOTPModal(true);
         })
+        .on("mfa-sent-handle", (mfaHandle) => {
+          // Display the MFA OTP modal
+
+          setShowEmailOTPModal(false);
+          setShowMFAOTPModal(true);
+        })
         .on("done", (result) => {
           handleGetMetadata();
 
@@ -46,19 +55,14 @@ export default function Login({ setUser }) {
         .catch((err) => {
           console.log("%cError caught during login:\n", "color: red");
           console.error(err);
-          setOtpLogin();
+          setLogin();
         })
         .on("settled", () => {
-          setOtpLogin();
+          setLogin();
           setShowEmailOTPModal(false);
           setShowMFAOTPModal(false);
+          setShowMFARecoveryModal(false);
           setShowDeviceRegistrationModal(false);
-        })
-        .on("mfa-sent-handle", (mfaHandle) => {
-          // Display the MFA OTP modal
-
-          setShowEmailOTPModal(false);
-          setShowMFAOTPModal(true);
         });
     } catch (err) {
       console.error(err);
@@ -75,7 +79,7 @@ export default function Login({ setUser }) {
 
   const handleCancel = () => {
     try {
-      otpLogin.emit("cancel");
+      login.emit("cancel");
 
       console.log("%cUser canceled login.", "color: orange");
     } catch (err) {
@@ -87,14 +91,22 @@ export default function Login({ setUser }) {
     <div className="login">
       {showDeviceRegistrationModal ? (
         <DeviceRegistration
-          login={otpLogin}
           handleCancel={handleCancel}
           setShowDeviceRegistrationModal={setShowDeviceRegistrationModal}
         />
       ) : showEmailOTPModal ? (
-        <EmailOTPModal login={otpLogin} handleCancel={handleCancel} />
+        <EmailOTPModal handleCancel={handleCancel} />
       ) : showMFAOTPModal ? (
-        <MFAOTPModal handle={otpLogin} handleCancel={handleCancel} />
+        <MFAOTPModal
+          handleCancel={handleCancel}
+          setShowMFAOTPModal={setShowMFAOTPModal}
+          setShowMFARecoveryModal={setShowMFARecoveryModal}
+        />
+      ) : showMFARecoveryModal ? (
+        <MFARecoveryModal
+          handleCancel={handleCancel}
+          setShowMFARecoveryModal={setShowMFARecoveryModal}
+        />
       ) : (
         <EmailForm handleEmailLoginCustom={handleEmailLoginCustom} />
       )}

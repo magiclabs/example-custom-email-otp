@@ -50,7 +50,10 @@ There are two flows demonstrated in this app for which events must be handled to
 
 **Multi-Factor Auth**
 | Event Name | Definition |
-| ---------------------------------- | ---------------------------------------------------------------------- |
-| `mfa-sent-handle` | Dispatched when the MFA OTP is ready to be received.                                    |
-| `verify-mfa-code` | Emit along with the MFA OTP to verify the code from user.                               |
-| `invalid-mfa-otp` | Dispatched when the MFA OTP sent fails verification.                                    |
+| -----------------------------| ---------------------------------------------------------------------- |
+| `mfa-sent-handle` | Dispatched when the MFA OTP is ready to be received. |
+| `verify-mfa-code` | Emit along with the MFA OTP to verify the code from user. |
+| `invalid-mfa-otp` | Dispatched when the MFA OTP sent fails verification. |
+| `recovery-code-sent-handle` | Dispatched when the MFA recovery code is ready to be received. |
+| `invalid-recovery-code` | Dispatched when the incorrect MFA recovery code is submitted. |
+| `recovery-code-success` | Dispatched when the MFA MFA recovery code is successfully submitted. |

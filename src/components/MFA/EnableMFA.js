@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { magic } from "../../lib/magic";
 import { QRCode } from "react-qrcode-logo";
 import authy from "../../SVG/Authy.svg";
@@ -7,12 +7,12 @@ import EmojiSVGLogo from "../../SVG/EmojiSVGLogo.svg";
 import Copy from "../../SVG/Copy.svg";
 import UserContext from "../../context/UserContext";
 import MFAOTPModal from "./MFAOTPModal";
+import MFASettingsContext from "../../context/MFASettingsContext";
 
 export default function EnableMFA({ setShowMFASettings }) {
   const { user, setUser } = useContext(UserContext);
-  const [passcode, setPasscode] = useState("");
+  const { mfaSettings, setMFASettings } = useContext(MFASettingsContext);
   const [disabled, setDisabled] = useState(false);
-  const [mfaHandle, setMFAHandle] = useState(undefined);
   const [mfaKey, setMFAKey] = useState();
   const [mfaQR, setMFAQR] = useState();
   const [recoveryCode, setRecoveryCode] = useState("");
@@ -20,11 +20,11 @@ export default function EnableMFA({ setShowMFASettings }) {
 
   const handleCancel = () => {
     try {
-      mfaHandle.emit("cancel-mfa-setup");
+      mfaSettings && mfaSettings.emit("cancel-mfa-setup");
 
       setDisabled(false);
       setShowMFASettings(false);
-      setMFAHandle(null);
+      setMFASettings(null);
 
       console.log("%cUser canceled MFA setup", "color: orange");
     } catch (err) {
@@ -33,28 +33,28 @@ export default function EnableMFA({ setShowMFASettings }) {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (mfaPage === 0) {
       handleEnableMFA();
       setMFAPage((current) => current + 1);
     } else if (mfaPage === 1) {
       setMFAPage((current) => current + 1);
-    } else if (mfaPage === 2) {
-      mfaHandle.emit("verify-mfa-code", Number(passcode));
     } else {
-      setMFAHandle(null);
+      setMFASettings(null);
       setShowMFASettings(false);
+
+      // update user info now that user.isMFAEnabled is true
+      const updatedUserInfo = await magic.user.getInfo();
+      setUser(updatedUserInfo);
     }
   };
 
-  const handleEnableMFA = useCallback(async () => {
+  const handleEnableMFA = async () => {
     try {
-      setPasscode("");
+      const mfaSettings = magic.user.enableMFA({ showUI: false });
+      setMFASettings(mfaSettings);
 
-      const mfaHandle = magic.user.enableMFA({ showUI: false });
-      setMFAHandle(mfaHandle);
-
-      mfaHandle
+      mfaSettings
         .on("mfa-secret-generated", ({ QRCode, key }) => {
           console.log("mfa-secret-generated", QRCode, key);
 
@@ -67,10 +67,6 @@ export default function EnableMFA({ setShowMFASettings }) {
 
           setRecoveryCode(recoveryCode);
           setMFAPage((currentPage) => currentPage + 1);
-
-          // update user info now that user.isMFAEnabled is true
-          const updatedUserInfo = await magic.user.getInfo();
-          setUser(updatedUserInfo);
         })
         .on("error", (error) => {
           console.log("error configuring MFA");
@@ -80,7 +76,7 @@ export default function EnableMFA({ setShowMFASettings }) {
       console.error(error);
       setShowMFASettings(false);
     }
-  }, [setShowMFASettings]);
+  };
 
   const copyToClipboard = (text) => {
     navigator.clipboard
@@ -169,9 +165,7 @@ export default function EnableMFA({ setShowMFASettings }) {
             </div>
           )}
 
-          {mfaPage === 2 && (
-            <MFAOTPModal handle={mfaHandle} handleCancel={handleCancel} />
-          )}
+          {mfaPage === 2 && <MFAOTPModal handleCancel={handleCancel} />}
 
           {mfaPage === 3 && (
             <div className="mfa-page-wrapper">
@@ -184,6 +178,8 @@ export default function EnableMFA({ setShowMFASettings }) {
               </div>
 
               <div className="key-wrapper">
+                <span className="span-recovery">Your recovery code</span>
+
                 <code
                   className="key-code"
                   onClick={() => copyToClipboard(recoveryCode)}
@@ -195,7 +191,6 @@ export default function EnableMFA({ setShowMFASettings }) {
                     className="copy-symbol-svg"
                   />
                 </code>
-                <span>Your recovery code</span>
               </div>
             </div>
           )}
