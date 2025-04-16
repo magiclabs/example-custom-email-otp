@@ -90,6 +90,8 @@ button {
   border-radius: 10px;
 
   transition: box-shadow 1s;
+
+  cursor: pointer;
 }
 
 button:hover {
@@ -116,9 +118,17 @@ footer {
   LOADING 
 */
 
-.loading > h1 {
+.loading-wrapper {
+  width: 90%;
+
+  margin: auto;
+  border-radius: 10px;
+  padding: 0.5em;
+
   text-align: center;
+  font-size: 1.2em;
   color: var(--color-palette-1);
+  background-color: var(--color-palette-4);
 }
 
 /*
@@ -220,7 +230,7 @@ footer {
   margin: auto;
 }
 
-#passcode {
+.passcode {
   height: 3em;
   width: 100%;
   margin: auto;
@@ -672,6 +682,40 @@ td {
 }
 
 /*
+  MFA - LOST DEVICE
+*/
+
+.lost-device {
+  margin: auto;
+  border-radius: 10px;
+  padding: 0.5em;
+
+  background-color: var(--color-palette-1);
+  color: var(--color-palette-4);
+
+  cursor: pointer;
+}
+
+#recovery-code {
+  font-size: 2em;
+}
+
+.lost-recovery-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 1em;
+
+  margin: auto;
+  border-radius: 10px;
+  padding: 1em;
+
+  background-color: var(--color-palette-1);
+  color: var(--color-palette-4);
+  font-size: 1.25em;
+}
+
+/*
   MEDIA QUERIES
 */
 
@@ -753,4 +797,15 @@ td {
     padding: unset;
     gap: 1em;
   }
+}
+
+/* ICONS */
+
+.loading-icon {
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  display: block;
+
+  border: solid red 2px;
 }
