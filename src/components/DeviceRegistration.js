@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import LoginContext from "../context/LoginContext";
+import Loading from "./Loading";
 
-export default function DeviceRegistration({ login, handleCancel }) {
+export default function DeviceRegistration({ handleCancel }) {
   const [message, setMessage] = useState();
   const [retry, setRetry] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const { login } = useContext(LoginContext);
 
   login
     .on("device-verification-email-sent", () => {
@@ -32,20 +35,17 @@ export default function DeviceRegistration({ login, handleCancel }) {
   return (
     <div className="modal device-registration">
       <h1>Unrecognized Device</h1>
+      <code id="device-reg-message">
+        <p>Your device requires registration.</p>
+        <p>
+          We sent an email to you with instructions to register this device.
+        </p>
+        <p className="small">
+          This one-time approval keeps your account secure.
+        </p>
+      </code>
       <div className="message-wrapper">
-        {message ? (
-          <code id="device-reg-message">{message}</code>
-        ) : (
-          <code id="device-reg-message">
-            <p>Your device requires registration.</p>
-            <p>
-              We sent an email to you with instructions to register this device.
-            </p>
-            <p className="small">
-              This one-time approval keeps your account secure.
-            </p>
-          </code>
-        )}
+        {message ? <code id="device-reg-message">{message}</code> : <Loading />}
       </div>
       <div className="retry-cancel">
         {retry && (
