@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import LoginContext from "../context/LoginContext";
 
-export default function EmailOTPModal({ login, handleCancel }) {
+export default function EmailOTPModal({ handleCancel }) {
   const [passcode, setPasscode] = useState("");
   const [retries, setRetries] = useState(2);
   const [message, setMessage] = useState();
   const [disabled, setDisabled] = useState(false);
+  const { login, setLogin } = useContext(LoginContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,6 +53,7 @@ export default function EmailOTPModal({ login, handleCancel }) {
           type="text"
           name="passcode"
           id="passcode"
+          className="passcode"
           placeholder="Enter code"
           value={passcode}
           onChange={(e) => setPasscode(e.target.value.replace(" ", ""))}
